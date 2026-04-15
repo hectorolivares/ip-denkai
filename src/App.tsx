@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import "./App.css";
 import type { IpInfo } from "./types";
 import { IpMain } from "./components/IpMain";
 import { IpDetails } from "./components/IpDetails";
+import { Navbar } from "./components/Navbar";
+import { LegalView } from "./components/LegalView";
 
 import { LoadingStatus } from "./components/LoadingStatus";
 import { ErrorStatus } from "./components/ErrorStatus";
@@ -15,21 +18,18 @@ function App() {
   const fetchIpData = () => {
     setLoading(true);
     setError("");
-    // Utilizamos ipinfo.io que es super amigable con CORS y peticiones directas desde el frontend
     fetch("https://ipinfo.io/json")
       .then((res) => {
         if (!res.ok) throw new Error("Error al conectar con la API");
         return res.json();
       })
       .then((data: IpInfo) => {
-        // Una vez que tenemos la data principal, intentamos detectar IPv6 específicamente
         fetch("https://api6.ipify.org?format=json")
           .then(res => res.json())
           .then(v6Data => {
             setIpData({ ...data, ipv6: v6Data.ip });
           })
           .catch(() => {
-            // Si falla (no hay soporte IPv6), dejamos solo la data principal
             setIpData(data);
           });
       })
@@ -49,13 +49,6 @@ function App() {
     fetchIpData();
   }, []);
 
-  // Helpers para extraer información limpia de la data
-  const getLatLong = () => {
-    if (!ipData?.loc) return { lat: "N/A", lng: "N/A" };
-    const [lat, lng] = ipData.loc.split(",");
-    return { lat, lng };
-  };
-
   const getAsnIsp = () => {
     if (!ipData?.org) return { asn: "N/A", isp: "Desconocido" };
     const spacePos = ipData.org.indexOf(" ");
@@ -66,7 +59,6 @@ function App() {
     };
   };
 
-  const { lat, lng } = getLatLong();
   const { asn, isp } = getAsnIsp();
   const flagUrl = ipData?.country
     ? `https://flagcdn.com/h40/${ipData.country.toLowerCase()}.png`
@@ -74,35 +66,52 @@ function App() {
 
   return (
     <>
-      <section id="center" className="min-h-[50svh] py-12">
-        {loading ? (
-          <LoadingStatus />
-        ) : error ? (
-          <ErrorStatus error={error} onRetry={fetchIpData} />
-        ) : ipData ? (
-          <IpMain ipData={ipData} isp={isp} fetchIpData={fetchIpData} />
-        ) : null}
-      </section>
+      <Navbar />
+      
+      <Routes>
+        <Route path="/" element={
+          <>
+            <section id="center" className="min-h-[50svh] py-12">
+              {loading ? (
+                <LoadingStatus />
+              ) : error ? (
+                <ErrorStatus error={error} onRetry={fetchIpData} />
+              ) : ipData ? (
+                <IpMain ipData={ipData} isp={isp} fetchIpData={fetchIpData} />
+              ) : null}
+            </section>
 
+            <div className="ticks"></div>
 
-      <div className="ticks"></div>
+            <section className="w-full">
+              {ipData && (
+                <IpDetails
+                  ipData={ipData}
+                  asn={asn}
+                  isp={isp}
+                  flagUrl={flagUrl}
+                />
+              )}
+            </section>
 
-      <section className="w-full">
-        {ipData && (
-          <IpDetails
-            ipData={ipData}
-            lat={lat}
-            lng={lng}
-            asn={asn}
-            isp={isp}
-            flagUrl={flagUrl}
-          />
-        )}
-      </section>
+            <div className="ticks hidden lg:block"></div>
+          </>
+        } />
+        
+        <Route path="/info" element={<LegalView />} />
+      </Routes>
 
-      <div className="ticks hidden lg:block"></div>
-      <footer className="w-full text-center py-4 opacity-60 text-[11px] mt-auto font-mono uppercase">
-        Built by Héctor Olivares
+      <footer className="w-full px-8 py-8 opacity-60 text-[10px] mt-auto font-mono uppercase">
+        <div className="max-w-[1126px] mx-auto flex items-center justify-between">
+          <span className="hidden sm:inline">Version 1.0.4</span>
+          <span>© 2026 Built by Héctor Olivares</span>
+          <Link 
+            to="/info"
+            className="hover:text-[var(--accent)] hover:underline cursor-pointer transition-colors"
+          >
+            License & Credits
+          </Link>
+        </div>
       </footer>
     </>
   );
