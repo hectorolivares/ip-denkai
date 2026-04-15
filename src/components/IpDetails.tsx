@@ -2,27 +2,30 @@ import type { IpInfo } from "../types";
 
 interface IpDetailsProps {
   ipData: IpInfo;
-  lat: string;
-  lng: string;
   asn: string;
   isp: string;
   flagUrl: string;
 }
 
-export function IpDetails({
-  ipData,
-  lat,
-  lng,
-  asn,
-  isp,
-  flagUrl,
-}: IpDetailsProps) {
+export function IpDetails({ ipData, asn, isp, flagUrl }: IpDetailsProps) {
+  const getOS = () => {
+    const ua = window.navigator.userAgent;
+    if (ua.indexOf("Win") !== -1) return "Windows";
+    if (ua.indexOf("Mac") !== -1) return "macOS";
+    if (ua.indexOf("Linux") !== -1) return "Linux";
+    if (ua.indexOf("Android") !== -1) return "Android";
+    if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) return "iOS";
+    return "Desconocido";
+  };
+
+  const os = getOS();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)] border-y border-[var(--border)] shadow-sm">
-      <div className="bg-[var(--bg)] p-8 md:p-10 hover:bg-[var(--code-bg)] transition-colors duration-300 flex flex-col items-center text-center group">
-        <div className="w-16 h-16 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+      <div className="bg-[var(--bg)] p-8 hover:bg-[var(--code-bg)] transition-colors duration-300 flex flex-col items-center text-center group">
+        <div className="size-12 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
           <svg
-            className="w-8 h-8 text-[var(--accent)]"
+            className="size-6 text-[var(--accent)]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -35,13 +38,13 @@ export function IpDetails({
             <circle cx="12" cy="10" r="3" />
           </svg>
         </div>
-        <h2 className="text-[12px] font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] opacity-50">
           Ubicación
         </h2>
-        <p className="text-[14px] font-semibold text-[var(--text-h)] leading-tight">
+        <p className="text-base font-semibold text-white leading-tight">
           {ipData.city}
         </p>
-        <p className="opacity-70 text-[14px] mt-1">{ipData.region}</p>
+        <p className="opacity-70 text-sm mt-1">{ipData.region}</p>
         {flagUrl && (
           <img
             src={flagUrl}
@@ -52,9 +55,9 @@ export function IpDetails({
       </div>
 
       <div className="bg-[var(--bg)] p-8 md:p-10 hover:bg-[var(--code-bg)] transition-colors duration-300 flex flex-col items-center text-center group">
-        <div className="w-16 h-16 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+        <div className="size-12 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
           <svg
-            className="w-8 h-8 text-[var(--accent)]"
+            className="size-6 text-[var(--accent)]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -68,7 +71,7 @@ export function IpDetails({
             <polyline points="2 12 12 17 22 12" />
           </svg>
         </div>
-        <h2 className="text-[16px] font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
           Proveedor (ISP)
         </h2>
         <p className="text-xl font-semibold text-[var(--text-h)] leading-tight font-mono">
@@ -82,9 +85,9 @@ export function IpDetails({
       </div>
 
       <div className="bg-[var(--bg)] p-8 md:p-10 hover:bg-[var(--code-bg)] transition-colors duration-300 flex flex-col items-center text-center group">
-        <div className="w-16 h-16 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+        <div className="size-12 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
           <svg
-            className="w-8 h-8 text-[var(--accent)]"
+            className="size-6 text-[var(--accent)]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -93,49 +96,29 @@ export function IpDetails({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            <rect x="3" y="11" width="18" height="10" rx="2" />
+            <circle cx="12" cy="5" r="2" />
+            <path d="M12 7v4" />
+            <line x1="8" y1="16" x2="8" y2="16" />
+            <line x1="12" y1="16" x2="12" y2="16" />
+            <line x1="16" y1="16" x2="16" y2="16" />
           </svg>
         </div>
-        <h2 className="text-[16px] font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
-          Coordenadas
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
+          Name Address
         </h2>
-        <div className="font-mono text-[var(--text-h)] bg-[var(--code-bg)] px-3 py-1.5 rounded-md mb-4 text-center border border-[var(--border)]">
-          <div className="text-sm border-b border-[var(--border)] pb-1 mb-1">
-            LAT: {lat}
-          </div>
-          <div className="text-sm">LNG: {lng}</div>
+        <p className="text-lg font-semibold text-[var(--text-h)] leading-tight font-mono break-all px-4">
+          {ipData.hostname || "N/A"}
+        </p>
+        <div className="mt-4 px-3 py-1 bg-[var(--code-bg)] rounded-full text-xs font-medium border border-[var(--border)] opacity-60">
+          REVERSE DNS
         </div>
-        <a
-          href={`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-auto text-[14px] text-[var(--accent)] hover:underline inline-flex items-center gap-1.5 font-medium"
-        >
-          Abrir en Maps
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-            <polyline points="15 3 21 3 21 9" />
-            <line x1="10" y1="14" x2="21" y2="3" />
-          </svg>
-        </a>
       </div>
 
       <div className="bg-[var(--bg)] p-8 md:p-10 hover:bg-[var(--code-bg)] transition-colors duration-300 flex flex-col items-center text-center group">
-        <div className="w-16 h-16 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+        <div className="size-12 rounded-full bg-[var(--accent-bg)] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
           <svg
-            className="w-8 h-8 text-[var(--accent)]"
+            className="size-6 text-[var(--accent)]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -144,27 +127,19 @@ export function IpDetails({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
           </svg>
         </div>
-        <h2 className="text-[16px] font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
-          Zona Horaria
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] opacity-50 mb-3">
+          Sistema Operativo
         </h2>
-        <p className="text-lg font-semibold text-[var(--text-h)] leading-tight font-mono">
-          {ipData.timezone}
+        <p className="text-2xl font-bold text-[var(--text-h)] leading-tight font-mono">
+          {os}
         </p>
-        <div className="mt-4 px-3 py-1 bg-[var(--code-bg)] rounded-full text-[14px] font-medium border border-[var(--border)]">
-          {ipData.timezone && (
-            <>
-              Local:{" "}
-              {new Date().toLocaleTimeString("es-ES", {
-                timeZone: ipData.timezone,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </>
-          )}
+        <div className="mt-4 px-3 py-1 bg-[var(--code-bg)] rounded-full text-xs font-medium border border-[var(--border)] uppercase opacity-80">
+          Browser Platform
         </div>
       </div>
     </div>
