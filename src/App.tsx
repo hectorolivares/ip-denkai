@@ -22,7 +22,16 @@ function App() {
         return res.json();
       })
       .then((data: IpInfo) => {
-        setIpData(data);
+        // Una vez que tenemos la data principal, intentamos detectar IPv6 específicamente
+        fetch("https://api6.ipify.org?format=json")
+          .then(res => res.json())
+          .then(v6Data => {
+            setIpData({ ...data, ipv6: v6Data.ip });
+          })
+          .catch(() => {
+            // Si falla (no hay soporte IPv6), dejamos solo la data principal
+            setIpData(data);
+          });
       })
       .catch((err) => {
         setError(

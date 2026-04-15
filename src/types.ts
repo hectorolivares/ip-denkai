@@ -7,4 +7,5 @@ export interface IpInfo {
   org: string;
   postal: string;
   timezone: string;
+  ipv6?: string;
 }

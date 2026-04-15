@@ -25,9 +25,18 @@ export function IpMain({ ipData, isp, fetchIpData }: IpMainProps) {
         TU IP PÚBLICA
       </div>
 
-      <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-6 text-[var(--text-h)] drop-shadow-sm select-all font-mono">
+      <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-4 text-[var(--text-h)] drop-shadow-sm select-all font-mono">
         {ipData.ip}
       </h1>
+
+      {ipData.ipv6 && ipData.ipv6 !== ipData.ip && (
+        <div className="mb-6 flex flex-col items-center">
+          <span className="text-[11px] font-bold uppercase tracking-widest opacity-40 mb-1 font-mono">IPv6 Detectada</span>
+          <span className="text-[16px] md:text-[18px] font-mono text-[var(--accent)] bg-[var(--accent-bg)] px-4 py-1 rounded-full border border-[var(--accent-border)] select-all shadow-sm">
+            {ipData.ipv6}
+          </span>
+        </div>
+      )}
 
       <p className="text-[14px] opacity-80 max-w-2xl text-center mb-10 leading-relaxed">
         Conectado desde{" "}
