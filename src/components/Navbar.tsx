@@ -1,17 +1,18 @@
 export function Navbar() {
   return (
     <nav className="w-full border-b border-[var(--border)] bg-[var(--bg)] px-6 py-3 flex items-center justify-between top-0 z-50 backdrop-blur-md bg-opacity-80">
-      <div className="flex items-center gap-2">
-        <div className="size-8 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-[0_0_15px_var(--accent-border)]">
-          D
-        </div>
-        <span className="font-heading font-bold text-lg tracking-tight text-[var(--text-h)]">
-          IP Denkai
-        </span>
+      <div className="flex items-center gap-3">
+        <pre className="font-mono text-[7px] leading-[1] text-[var(--accent)] tracking-tighter select-none" aria-label="IP Denkai">
+{`    ________     ____             __         _ 
+   /  _/ __ \\   / __ \\___  ____  / /______ _(_)
+   / // /_/ /  / / / / _ \\/ __ \\/ //_/ __ \`/ / 
+ _/ // ____/  / /_/ /  __/ / / / ,< / /_/ / /  
+/___/_/      /_____/\\___/_/ /_/_/|_|\\__,_/_/   `}
+        </pre>
       </div>
 
       <a
-        href="https://github.com/hectorolivares/public-ip-addr"
+        href="https://github.com/hectorolivares/ip-denkai"
         target="_blank"
         rel="noreferrer"
         className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--code-bg)] border border-[var(--border)] hover:bg-[var(--border)] transition-colors text-sm font-medium text-[var(--text-h)] group"
