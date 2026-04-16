@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 import type { IpInfo } from "./types";
 import { IpMain } from "./components/IpMain";
@@ -84,7 +84,7 @@ function App() {
                 ) : error ? (
                   <ErrorStatus error={error} onRetry={fetchIpData} />
                 ) : ipData ? (
-                  <IpMain ipData={ipData} isp={isp} fetchIpData={fetchIpData} />
+                  <IpMain ipData={ipData} isp={isp} />
                 ) : null}
               </section>
 

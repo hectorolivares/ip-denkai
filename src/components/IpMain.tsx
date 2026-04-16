@@ -5,10 +5,9 @@ import { CopyNotification } from "./CopyNotification";
 interface IpMainProps {
   ipData: IpInfo;
   isp: string;
-  fetchIpData: () => void;
 }
 
-export function IpMain({ ipData, isp, fetchIpData }: IpMainProps) {
+export function IpMain({ ipData, isp }: IpMainProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = (text: string) => {
