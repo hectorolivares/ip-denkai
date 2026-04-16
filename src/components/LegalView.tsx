@@ -5,7 +5,7 @@ export function LegalView() {
 
   return (
     <div className="w-full max-w-2xl mx-auto px-6 py-20 text-left font-mono text-xs leading-relaxed opacity-70">
-      <button 
+      <button
         onClick={() => navigate("/")}
         className="mb-12 hover:text-[var(--text-h)] transition-colors cursor-pointer block"
       >
@@ -13,9 +13,11 @@ export function LegalView() {
       </button>
 
       <section className="mb-12">
-        <div className="text-[var(--text-h)] font-bold mb-4"># LICENCIA MIT</div>
+        <div className="text-[var(--text-h)] font-bold mb-4">
+          # LICENCIA MIT
+        </div>
         <p className="whitespace-pre-wrap">
-{`Copyright (c) 2026 Héctor Olivares
+          {`Copyright (c) 2026 Héctor Olivares
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,22 +41,38 @@ SOFTWARE.`}
 
       <section className="mb-12">
         <div className="text-[var(--text-h)] font-bold mb-4"># STACK</div>
-        <p>
-          React 18 / TypeScript / Tailwind CSS / Geist Mono / IPInfo API
-        </p>
+        <p>React 18 / TypeScript / Tailwind CSS / Geist Mono / IPInfo API</p>
       </section>
 
       <section className="mb-12">
         <div className="text-[var(--text-h)] font-bold mb-4"># CONTACTO</div>
-        <p>
-          GitHub: https://github.com/hectorolivares<br />
-          Email: hector@ejemplo.com
-        </p>
+
+        <div className="flex items-center gap-2">
+          <p>GitHub:</p>
+          <a
+            href="https://github.com/hectorolivares"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--text-h)] hover:underline cursor-pointer transition-colors"
+          >
+            hectorolivares
+          </a>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <p>email:</p>
+          <a
+            href="mailto:hey@hctr.mx"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--text-h)] hover:underline cursor-pointer transition-colors"
+          >
+            hey@hctr.mx
+          </a>
+        </div>
       </section>
 
-      <div className="mt-20 opacity-20 text-[10px]">
-        EOF_LEGAL_NOTICE
-      </div>
+      <div className="mt-20 opacity-20 text-[10px]">EOF_LEGAL_NOTICE</div>
     </div>
   );
 }
