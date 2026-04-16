@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import { Routes, Route, useNavigate, Link, useLocation } from "react-router-dom";
 import "./App.css";
 import type { IpInfo } from "./types";
 import { IpMain } from "./components/IpMain";
@@ -14,6 +14,11 @@ function App() {
   const [ipData, setIpData] = useState<IpInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const fetchIpData = () => {
     setLoading(true);
@@ -25,8 +30,8 @@ function App() {
       })
       .then((data: IpInfo) => {
         fetch("https://api6.ipify.org?format=json")
-          .then(res => res.json())
-          .then(v6Data => {
+          .then((res) => res.json())
+          .then((v6Data) => {
             setIpData({ ...data, ipv6: v6Data.ip });
           })
           .catch(() => {
@@ -67,45 +72,48 @@ function App() {
   return (
     <>
       <Navbar />
-      
+
       <Routes>
-        <Route path="/" element={
-          <>
-            <section id="center" className="min-h-[50svh] py-12">
-              {loading ? (
-                <LoadingStatus />
-              ) : error ? (
-                <ErrorStatus error={error} onRetry={fetchIpData} />
-              ) : ipData ? (
-                <IpMain ipData={ipData} isp={isp} fetchIpData={fetchIpData} />
-              ) : null}
-            </section>
+        <Route
+          path="/"
+          element={
+            <>
+              <section id="center" className="min-h-[50svh] py-12">
+                {loading ? (
+                  <LoadingStatus />
+                ) : error ? (
+                  <ErrorStatus error={error} onRetry={fetchIpData} />
+                ) : ipData ? (
+                  <IpMain ipData={ipData} isp={isp} fetchIpData={fetchIpData} />
+                ) : null}
+              </section>
 
-            <div className="ticks"></div>
+              <div className="ticks"></div>
 
-            <section className="w-full">
-              {ipData && (
-                <IpDetails
-                  ipData={ipData}
-                  asn={asn}
-                  isp={isp}
-                  flagUrl={flagUrl}
-                />
-              )}
-            </section>
+              <section className="w-full">
+                {ipData && (
+                  <IpDetails
+                    ipData={ipData}
+                    asn={asn}
+                    isp={isp}
+                    flagUrl={flagUrl}
+                  />
+                )}
+              </section>
 
-            <div className="ticks hidden lg:block"></div>
-          </>
-        } />
-        
+              <div className="ticks hidden lg:block"></div>
+            </>
+          }
+        />
+
         <Route path="/info" element={<LegalView />} />
       </Routes>
 
-      <footer className="w-full px-8 py-8 opacity-60 text-[10px] mt-auto font-mono uppercase">
-        <div className="max-w-[1126px] mx-auto flex items-center justify-between">
-          <span className="hidden sm:inline">Version 1.0.4</span>
-          <span>© 2026 Built by Héctor Olivares</span>
-          <Link 
+      <footer className="w-full px-8 py-10 opacity-60 text-[10px] mt-auto font-mono uppercase">
+        <div className="max-w-[1126px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 text-center md:text-left">
+          <span>Version 1.0.5</span>
+          <span>Design & Built by Héctor Olivares</span>
+          <Link
             to="/info"
             className="hover:text-[var(--accent)] hover:underline cursor-pointer transition-colors"
           >

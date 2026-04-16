@@ -41,7 +41,7 @@ export function IpMain({ ipData, isp, fetchIpData }: IpMainProps) {
                 IPv6 Detectada
               </span>
               <span
-                className="font-mono text-[var(--accent)] bg-[var(--accent-bg)] px-4 py-1 rounded-full border border-[var(--accent-border)] shadow-sm cursor-pointer hover:scale-105 transition-transform select-none"
+                className="font-mono text-[var(--accent)] bg-[var(--accent-bg)] px-4 py-1 rounded-full border border-[var(--accent-border)] shadow-sm cursor-pointer hover:scale-105 transition-transform select-none text-[12px] sm:text-base"
                 onClick={() => handleCopy(ipData.ipv6!)}
                 title="Haz clic para copiar"
               >
