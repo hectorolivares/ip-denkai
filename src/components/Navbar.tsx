@@ -4,18 +4,18 @@ export function Navbar() {
       <div className="flex items-center gap-3">
         <pre
           className="font-mono text-[7px] leading-[1] text-[var(--accent)] tracking-tighter select-none"
-          aria-label="IP Denkai"
+          aria-label="IP Dekai"
         >
-          {`    ________     ____             __         _ 
-   /  _/ __ \\   / __ \\___  ____  / /______ _(_)
-   / // /_/ /  / / / / _ \\/ __ \\/ //_/ __ \`/ / 
- _/ // ____/  / /_/ /  __/ / / / ,< / /_/ / /  
-/___/_/      /_____/\\___/_/ /_/_/|_|\\__,_/_/   `}
+          {`    ________      ____         __         _ 
+   /  _/ __ \\    / __ \\___    / /______ _(_)
+   / // /_/ /   / / / / _ \\  / //_/ __ \`/ / 
+ _/ // ____/   / /_/ /  __/ / ,< / /_/ / /  
+/___/_/       /_____/\\___/ /_/_/|_|\\__,_/_/ `}
         </pre>
       </div>
 
       <a
-        href="https://github.com/hectorolivares/ip-denkai"
+        href="https://github.com/hectorolivares/ip-dekai"
         target="_blank"
         rel="noreferrer"
         className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--code-bg)] border border-[var(--border)] hover:bg-[var(--border)] transition-colors text-sm font-medium text-[var(--text-h)] group"
